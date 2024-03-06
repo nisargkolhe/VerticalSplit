@@ -179,7 +179,8 @@ public struct VerticalSplit<
                     newSplit = .fraction(0)
                 } else if newPartition > cardHeight - lil2 {
                     newPartition = cardHeight - lil
-                    newSplit = .bottomMini
+                    // newSplit = .bottomMini
+                    newSplit = .fraction(0.2)
                 } else if newPartition > cardHeight - lil3 {
                     newPartition = cardHeight - lil3
                     newSplit = .fraction(1)
