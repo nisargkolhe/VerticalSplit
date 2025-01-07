@@ -319,6 +319,7 @@ public struct VerticalSplit<
             .frame(height: isMinimalPill ? 44 : currentSpacing)
             .frame(maxWidth: isMinimalPill ? nil : .infinity)
             .background(Capsule().fill(.black))
+            .opacity((hidePill ? 0 : 1)) // THIS ONE TO HIDE THE PILL
             .offset(
                 y: (hideTop ? -lil + 8 : hideBottom ? lil - 8 - bottomExtraOffset : 0)
                 + (partition + overscroll / (hideTop || hideBottom ? 1 : 5))
@@ -400,7 +401,7 @@ public struct VerticalSplit<
             .frame(height: isMinimalPill ? 44 : currentSpacing)
             .scaleEffect(isAccessoriesPill ? 0.9 : 1)
             .blur(radius: isAccessoriesPill ? 12 : 0)
-            .opacity(isAccessoriesPill ? 0 : (hidePill ? 0 : 1))
+            .opacity(isAccessoriesPill ? 0 : 1)
             .frame(maxWidth: .infinity, alignment: .center)
             .overlay(alignment: .center) {
                 HStack(spacing: 8) {
@@ -453,7 +454,7 @@ public struct VerticalSplit<
                 + (partition + overscroll / (hideTop || hideBottom ? 1 : 5))
             )
             .gesture(currentSpacing == spacing ? bossGesture : nil)
-            .zIndex(10)
+            .zIndex(hidePill ? -1 : 10) // THIS ONE TO DISABLE TOUCH
             
             
             ZStack {
@@ -470,7 +471,7 @@ public struct VerticalSplit<
                     .fixedSize()
                     .scaleEffect(isMinimalPill ? 1 : 0.9)
                     .blur(radius: isMinimalPill ? 0 : 12)
-                    .opacity(isMinimalPill ? 1 : 0)
+                    .opacity(isMinimalPill ? (hidePill ? 0 : 1) : 0) // THIS ONE TO HIDE TEXT
                     .foregroundStyle(.white)
                     .offset(x: CGFloat(leadingCount - trailingCount) * (20 + 8) / 2)
             }
