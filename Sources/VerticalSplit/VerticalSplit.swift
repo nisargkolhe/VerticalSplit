@@ -51,6 +51,7 @@ public struct VerticalSplit<
     var trailingCount: Int = 0
     
     @Binding var detent: SplitDetent
+    @Binding var hidePill: Bool
     @State var didSetInitialSplit = false
     
     var shouldLog = false
@@ -399,7 +400,7 @@ public struct VerticalSplit<
             .frame(height: isMinimalPill ? 44 : currentSpacing)
             .scaleEffect(isAccessoriesPill ? 0.9 : 1)
             .blur(radius: isAccessoriesPill ? 12 : 0)
-            .opacity(isAccessoriesPill ? 0 : 1)
+            .opacity(isAccessoriesPill ? 0 : (hidePill ? 0 : 1))
             .frame(maxWidth: .infinity, alignment: .center)
             .overlay(alignment: .center) {
                 HStack(spacing: 8) {
@@ -563,6 +564,7 @@ public struct VerticalSplit<
     ///   - bottomMiniOverlay: A custom overlay for the bottom view when minimised.
     public init(
         detent: Binding<SplitDetent> = .constant(.fraction(0.5)),
+        hidePill: Binding<Bool> = .constant(false),
         topTitle: String,
         bottomTitle: String,
         topView: @escaping () -> TopView,
@@ -571,6 +573,7 @@ public struct VerticalSplit<
         bottomMiniOverlay: @escaping () -> BottomViewOverlay
     ) {
         self._detent = detent
+        self._hidePill = hidePill
         self.topView = topView
         self.bottomView = bottomView
         self.topViewOverlay = topMiniOverlay
@@ -591,6 +594,7 @@ public struct VerticalSplit<
     ///   - topMiniOverlay: A custom overlay for the top view when minimised.
     public init(
         detent: Binding<SplitDetent> = .constant(.fraction(0.5)),
+        hidePill: Binding<Bool> = .constant(false),
         topTitle: String,
         bottomTitle: String,
         topView: @escaping () -> TopView,
@@ -606,6 +610,7 @@ public struct VerticalSplit<
         self.autoTopOverlay = false
         self.autoBottomOverlay = true
         self._detent = detent
+        self._hidePill = hidePill
     }
     
     /// Creates a VerticalSplit with top and bottom views and a custom overlay for the bottom view when minimised.
@@ -618,6 +623,7 @@ public struct VerticalSplit<
     ///   - bottomMiniOverlay: A custom overlay for the bottom view when minimised.
     public init(
         detent: Binding<SplitDetent> = .constant(.fraction(0.5)),
+        hidePill: Binding<Bool> = .constant(false),
         topTitle: String,
         bottomTitle: String,
         topView: @escaping () -> TopView,
@@ -633,6 +639,7 @@ public struct VerticalSplit<
         self.autoTopOverlay = true
         self.autoBottomOverlay = false
         self._detent = detent
+        self._hidePill = hidePill
     }
     
     
@@ -645,6 +652,7 @@ public struct VerticalSplit<
     ///   - bottomView: The content shown in the bottom view.
     public init(
         detent: Binding<SplitDetent> = .constant(.fraction(0.5)),
+        hidePill: Binding<Bool> = .constant(false),
         topTitle: String,
         bottomTitle: String,
         topView: @escaping () -> TopView,
@@ -659,6 +667,7 @@ public struct VerticalSplit<
         self.autoTopOverlay = true
         self.autoBottomOverlay = true
         self._detent = detent
+        self._hidePill = hidePill
     }
 
 }
